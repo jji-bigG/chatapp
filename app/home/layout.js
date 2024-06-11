@@ -14,31 +14,35 @@
   ```
 */
 import { Fragment, useState } from "react";
+import { usePathname } from "next/navigation";
+
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   BellIcon,
-  CalendarIcon,
-  ChartPieIcon,
+  ChatBubbleLeftRightIcon,
   Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
   HomeIcon,
-  UsersIcon,
+  UserGroupIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
+import Link from "next/link";
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+  { name: "Home", href: "/home", icon: HomeIcon },
+  {
+    name: "Chat",
+    href: "/home/chat",
+    icon: ChatBubbleLeftRightIcon,
+  },
+  { name: "Friends", href: "/home/friends", icon: UserGroupIcon },
+  // { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
+  // { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
+  // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
 ];
 const teams = [
   { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
@@ -47,7 +51,7 @@ const teams = [
 ];
 const userNavigation = [
   { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "Sign out", href: "/" },
 ];
 
 function classNames(...classes) {
@@ -56,6 +60,7 @@ function classNames(...classes) {
 
 export default function Example({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const path = usePathname();
 
   return (
     <>
@@ -135,10 +140,10 @@ export default function Example({ children }) {
                           <ul role="list" className="-mx-2 space-y-1">
                             {navigation.map((item) => (
                               <li key={item.name}>
-                                <a
+                                <Link
                                   href={item.href}
                                   className={classNames(
-                                    item.current
+                                    path === item.href
                                       ? "bg-gray-800 text-white"
                                       : "text-gray-400 hover:text-white hover:bg-gray-800",
                                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -149,14 +154,14 @@ export default function Example({ children }) {
                                     aria-hidden="true"
                                   />
                                   {item.name}
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
                         </li>
                         <li>
                           <div className="text-xs font-semibold leading-6 text-gray-400">
-                            Your teams
+                            Favorites & Pinned
                           </div>
                           <ul role="list" className="-mx-2 mt-2 space-y-1">
                             {teams.map((team) => (
@@ -217,10 +222,10 @@ export default function Example({ children }) {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
+                        <Link
                           href={item.href}
                           className={classNames(
-                            item.current
+                            path === item.href
                               ? "bg-gray-800 text-white"
                               : "text-gray-400 hover:text-white hover:bg-gray-800",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -231,14 +236,14 @@ export default function Example({ children }) {
                             aria-hidden="true"
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
                 </li>
                 <li>
                   <div className="text-xs font-semibold leading-6 text-gray-400">
-                    Your teams
+                    Favorites & Pinned
                   </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
