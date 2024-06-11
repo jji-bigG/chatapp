@@ -18,6 +18,11 @@ app.prepare().then(() => {
     console.log("new connection", socket.id);
   });
 
+  io.on("message", (message) => {
+    // broadcast to all connections
+    io.emit("message", message);
+  });
+
   httpServer
     .once("error", (err) => {
       console.error(err);
